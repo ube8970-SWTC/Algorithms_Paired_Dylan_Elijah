@@ -1,0 +1,25 @@
+TICKETS = [
+    {"ticket_id": "T01", "status": "open", "category": "software", "age_days": 1, "priority": "high"},
+
+    {"ticket_id": "T02", "status": "open", "category": "software", "age_days": 2, "priority": "high"},
+
+    {"ticket_id": "T03", "status": "open", "category": "software", "age_days": 3, "priority": "normal"},
+
+    {"ticket_id": "T04", "status": "open", "category": "access", "age_days": 3, "priority": "normal"},
+
+    {"ticket_id": "T05", "status": "closed", "category": "access", "age_days": 3, "priority": "high"},
+
+    {"ticket_id": "T06", "status": "open", "category": "access", "age_days": 1, "priority": "normal"},
+
+    {"ticket_id": "T07", "status": "open", "category": "network", "age_days": 4, "priority": "low"},
+
+    {"ticket_id": "T08", "status": "closed", "category": "network", "age_days": 0, "priority": "normal"},
+    
+    {"ticket_id": "T09", "status": "open", "category": "network", "age_days": 2, "priority": "high"},
+
+    {"ticket_id": "T10", "status": "open", "category": "software", "age_days": True, "priority": "high"},
+
+    {"ticket_id": "T11", "status": "open", "category": "access", "age_days": None, "priority": "normal"},
+    
+    {"ticket_id": "T12", "status": "waiting", "category": "network", "age_days": 3, "priority": "high"},
+]
