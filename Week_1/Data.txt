@@ -14,9 +14,9 @@ TICKETS = [
     {"ticket_id": "T07", "status": "open", "category": "network", "age_days": 4, "priority": "low"},
 
     {"ticket_id": "T08", "status": "closed", "category": "network", "age_days": 0, "priority": "normal"},
-    
-    {"ticket_id": "T09", "status": "open", "category": "network", "age_days": 2, "priority": "high"},
 
+    {"ticket_id": "T09", "status": "open", "category": "network", "age_days": 2, "priority": "high"},
+    
     {"ticket_id": "T10", "status": "open", "category": "software", "age_days": True, "priority": "high"},
 
     {"ticket_id": "T11", "status": "open", "category": "access", "age_days": None, "priority": "normal"},
