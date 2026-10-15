@@ -21,6 +21,7 @@ def normalize_ticket(ticket):
             "status": "",
             "priority": "",
             "age_days": None,
+            "tag": "",
         }
 
     return {
@@ -29,6 +30,7 @@ def normalize_ticket(ticket):
         "status": str(ticket.get("status") or "").strip().lower(),
         "priority": str(ticket.get("priority") or "unknown").strip().lower(),
         "age_days": ticket.get("age_days"),
+        "tag": str(ticket.get("tag") or "").strip(),
     }
 
 def validate_ticket(ticket):
@@ -60,13 +62,18 @@ def validate_ticket(ticket):
     if normalized["status"] not in {"open", "closed"}:
         return False, f"Status '{normalized['status']}' is not acceptable. Use 'open' or 'closed'."
 
+    if normalized["status"] == "open" and normalized["age_days"] >= 2:
+        if "follow-up" not in normalized["tag"].lower():
+            normalized["tag"] = f"{normalized['tag']}, follow-up" if normalized["tag"] else "follow-up"
+
     return True, normalized
 
 def select_open_tickets(tickets):
     open_tickets = []
-    for ticket in tickets:
+    for index, ticket in enumerate(tickets, start=1):
         is_valid, result = validate_ticket(ticket)
         if is_valid and result["status"] == "open":
+            result["ticket_index"] = index
             open_tickets.append(result)
     return open_tickets
 
@@ -88,20 +95,26 @@ def show_report(tickets):
 
 if __name__ == "__main__":
     open_tickets = select_open_tickets(TICKETS)
-    print(f"Open tickets: {len(open_tickets)}")
-    for open_ticket in open_tickets:
-        print(f" - {open_ticket}")
-
     report = show_report(TICKETS)
-    print(f"Valid tickets: {report['valid']}")
+    # print(f"Valid tickets: {report['valid']}")
+    # changed print output to make it look nicer.
+    print("Open tickets:")
+    if open_tickets:
+        for ticket in open_tickets:
+            tag_text = f" | Tag: {ticket['tag']}" if ticket["tag"] else ""
+            print(
+                f"  #{ticket['ticket_index']} | ID: {ticket['ticket_id']} | "
+                f"Category: {ticket['category']} | Age: {ticket['age_days']} days | "
+                f"Status: {ticket['status']} | Priority: {ticket['priority']}"
+                f"{tag_text}"
+            )
+    else:
+        print("  No open tickets found.")
+    print()
     print(f"Invalid tickets: {report['invalid']}")
-    if report["invalid_tickets"]:
-        print("Details of invalid tickets:")
-        for invalid in report["invalid_tickets"]:
-            print(f" - {invalid}")
     print("Records needing checking:")
     records_needing_checking = []
-    for index, ticket in enumerate(TICKETS):
+    for index, ticket in enumerate(TICKETS, start=1):
         is_valid, result = validate_ticket(ticket)
         if not is_valid:
             records_needing_checking.append({"ticket_index": index, "reason": result})
