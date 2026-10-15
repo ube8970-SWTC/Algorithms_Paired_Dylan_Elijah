@@ -77,6 +77,8 @@ def select_open_tickets(tickets):
             open_tickets.append(result)
     return open_tickets
 
+# found an issue where the ticket numbers started with zero instead of 1 which needed to be corrected by using start=1 in enumerate.
+
 def show_report(tickets):
     report = {
         "valid": 0,
@@ -91,7 +93,6 @@ def show_report(tickets):
             report["invalid"] += 1
             report["invalid_tickets"].append(result)
     return report
-
 
 if __name__ == "__main__":
     open_tickets = select_open_tickets(TICKETS)
