@@ -11,3 +11,4 @@ TICKETS = [
     {"id": "T10", "status": "open", "category": "software", "age_days": True, "priority": "high"},
     {"id": "T11", "status": "open", "category": "access", "priority": "normal"},
     {"id": "T12", "status": "waiting", "category": "network", "age_days": 3, "priority": "high"},
+]
