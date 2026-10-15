@@ -1,4 +1,3 @@
-
 # working solution - Dylan
 
 import json
@@ -99,6 +98,7 @@ def process_tickets(tickets):
 
         ticket_data = result
         if ticket_data["status"] == "open":
+            age_days = ticket_data["age_days"]
             open_tickets.append(
                 {
                     "ticket_index": index,
@@ -106,7 +106,8 @@ def process_tickets(tickets):
                     "category": ticket_data["category"],
                     "status": ticket_data["status"],
                     "priority": ticket_data["priority"],
-                    "age_days": ticket_data["age_days"],
+                    "age_days": age_days,
+                    "tag": "follow-up" if age_days >= 2 else "",
                 }
             )
 
@@ -136,10 +137,12 @@ if __name__ == "__main__":
     print("Open tickets:")
     if open_tickets:
         for ticket in open_tickets:
+            tag_text = f" | Tag: {ticket['tag']}" if ticket["tag"] else ""
             print(
                 f"  #{ticket['ticket_index']} | ID: {ticket['ticket_id']} | "
                 f"Category: {ticket['category']} | Age: {ticket['age_days']} days | "
                 f"Status: {ticket['status']} | Priority: {ticket['priority']}"
+                f"{tag_text}"
             )
     else:
         print("  No open tickets found.")
